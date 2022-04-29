@@ -1,6 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Home page of characters title' });
+  });
+
 /* Страница Эрена */
 router.get('/eren', function(req, res, next) {
   res.render('hero', {
