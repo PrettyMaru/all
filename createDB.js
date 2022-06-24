@@ -1,15 +1,13 @@
 var mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/test')
+mongoose.connect('mongodb://localhost/all')
+var Hero = require("./models/hero").Hero
 
-var schema = mongoose.Schema({ name: String })
+var hero = new Hero({
+    title: "Эрен",
+    nick: "Eren"
+})
 
-schema.methods.meow = function() {
-    console.log(this.get("name") + " сказал мяу")
-}
-
-var Cat = mongoose.model('Cat', schema)
-
-var kitty = new Cat({ name: 'Пушок' })
-kitty.save(function(err) {
-    kitty.meow()
+console.log(hero)
+hero.save(function(err, hero, affected) {
+    console.log(hero.title)
 })
