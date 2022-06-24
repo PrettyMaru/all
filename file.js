@@ -1,23 +1,14 @@
 var async = require("async")
 
-async.parallel([
-        firstWord,
-        secondWord,
-        thirdWord
+async.waterfall([
+        function(callback) {
+            callback(null, "МАМА", "МЫЛА", "РАМУ")
+        },
+        function(arg1, arg2, arg3, callback) {
+            callback(null, arg1 + ' ' + arg2 + ' ' + arg3)
+        }
     ],
     function(err, result) {
-        if (err) throw err;
-        console.log(result.join(' '))
+        if (err) throw err
+        console.log(result)
     });
-
-function firstWord(callback) {
-    callback(null, 'МАМА')
-}
-
-function secondWord(callback) {
-    callback(null, 'МЫЛА')
-}
-
-function thirdWord(callback) {
-    callback(null, 'РАМУ')
-}
