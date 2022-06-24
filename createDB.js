@@ -1,7 +1,15 @@
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/test');
+var mongoose = require('mongoose')
+mongoose.connect('mongodb://localhost/test')
 
-const Cat = mongoose.model('Cat', { name: String });
+var schema = mongoose.Schema({ name: String })
 
-const kitty = new Cat({ name: 'Zildjian' });
-kitty.save().then(() => console.log('meow'));
+schema.methods.meow = function() {
+    console.log(this.get("name") + " сказал мяу")
+}
+
+var Cat = mongoose.model('Cat', schema)
+
+var kitty = new Cat({ name: 'Пушок' })
+kitty.save(function(err) {
+    kitty.meow()
+})
