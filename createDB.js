@@ -1,19 +1,16 @@
-var async = require("async")
-
 var mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/all')
-var Hero = require("./models/hero").Hero
-var data = require('./data.js').data;
+var async = require("async")
+var data = require('./data.js').data
 
 async.series([
         open,
         dropDatabase,
-        createHeroes,
-        close
+        requireModels,
+        createHeroes
     ],
     function(err, result) {
-        if (err) throw err
-        console.log("ok")
+        mongoose.disconnect()
     })
 
 function open(callback) {
@@ -26,11 +23,6 @@ function dropDatabase(callback) {
 }
 
 function createHeroes(callback) {
-    data = [
-        { title: "Эрен", nick: "eren" },
-        { title: "Ято", nick: "eren" },
-        { title: "Дазай", nick: "eren" },
-    ]
     async.each(data, function(heroData, callback) {
             var hero = new mongoose.models.Hero(heroData)
             hero.save(callback)
@@ -38,6 +30,12 @@ function createHeroes(callback) {
         callback)
 }
 
-function close(callback) {
-    mongoose.disconnect(callback)
+function requireModels(callback) {
+    require("./models/hero").Hero
+
+    async.each(Object.keys(mongoose.models), function(modelName) {
+            mongoose.models[modelName].ensureIndexes(callback)
+        },
+        callback
+    )
 }
