@@ -3,6 +3,7 @@ var async = require("async")
 var mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/all')
 var Hero = require("./models/hero").Hero
+var data = require('./data.js').data;
 
 async.series([
         open,
@@ -25,35 +26,11 @@ function dropDatabase(callback) {
 }
 
 function createHeroes(callback) {
-    async.parallel([
-            function(callback) {
-                var eren = new Hero({ nick: 'Eren' })
-                eren.save(function(err, eren) {
-                    callback(err, "Eren")
-                })
-            },
-            function(callback) {
-                var yato = new Hero({ nick: 'Yato' })
-                yato.save(function(err, yato) {
-                    callback(err, "Yato")
-                })
-            },
-            function(callback) {
-                var dazai = new Hero({ nick: 'Dazai' })
-                dazai.save(function(err, dazai) {
-                    callback(err, "Dazai")
-                })
-            },
-            function(callback) {
-                var shinji = new Hero({ nick: 'Shinji' })
-                shinji.save(function(err, shinji) {
-                    callback(err, "Shinji")
-                })
-            }
-        ],
-        function(err, result) {
-            callback(err)
-        })
+    async.each(data, function(heroData, callback) {
+            var hero = new mongoose.models.Hero(heroData)
+            hero.save(callback)
+        },
+        callback)
 }
 
 function close(callback) {
