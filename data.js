@@ -13,7 +13,7 @@ var data = [{
     {
         title: 'Дазай Осаму',
         nick: 'dazai',
-        avatar: 'https://i.pinimg.com/564x/d6/78/01/d678010c43b843c06849cf89749f0ddd.jpg',
+        avatar: 'https://i.pinimg.com/564x/d8/f1/d8/d8f1d8014c7b7eb9a007ef8d5b1270f9.jpg',
         desc: 'Один из старших сотрудников Вооружённого Детективного Агентства '
     },
     {
