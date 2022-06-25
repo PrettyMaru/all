@@ -4,7 +4,8 @@ var Hero = require("../models/hero").Hero
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.cookie('greeting', 'Hi!!!').render('index', { title: 'Home page of characters' /*, menu: menu*/ });
+    req.session.greeting = "Hi!!!!!"
+    res.render('index', { title: 'Home page of characters', /*menu: menu*/ })
 });
 
 
