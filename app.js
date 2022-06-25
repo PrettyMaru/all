@@ -10,6 +10,7 @@ var heroes = require('./routes/heroes');
 
 var mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/all')
+var session = require("express-session")
 
 var app = express();
 
@@ -25,6 +26,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
+app.use(session({
+    secret: "ErenIsHero",
+    cookie: { maxAge: 60 * 1000 }
+}))
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/heroes', heroes);
