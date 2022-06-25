@@ -5,7 +5,7 @@ var Hero = require("../models/hero").Hero
 /* GET home page. */
 router.get('/', function(req, res, next) {
     req.session.greeting = "Hi!!!!!"
-    res.render('index', { title: 'Home page of characters', /*menu: menu*/ })
+    res.render('index', { title: 'Home page of characters', /*menu: menu,*/ counter: req.session.counter });
 });
 
 
